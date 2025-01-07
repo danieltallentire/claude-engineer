@@ -117,10 +117,15 @@ document.getElementById('file-input').addEventListener('change', async (e) => {
 });
 
 document.getElementById('remove-image').addEventListener('click', () => {
+    removeImage();
+});
+
+function removeImage() {
     currentImageData = null;
+    currentMediaType = null;
     document.getElementById('image-preview').classList.add('hidden');
     document.getElementById('file-input').value = '';
-});
+}
 
 function appendThinkingIndicator() {
     const messagesDiv = document.getElementById('chat-messages');
@@ -231,6 +236,9 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
         imagePreview.src = `data:${currentMediaType || 'image/jpeg'};base64,${currentImageData}`;
         imagePreview.className = 'max-h-48 rounded-lg mt-2';
         document.querySelector('.message-wrapper:last-child .prose').appendChild(imagePreview);
+
+        // remove image after sending
+        removeImage();
     }
     
     // Clear input and reset height
